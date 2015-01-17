@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./server/config.json');
 var Record = require('./server/model.js');
+var fs = require('fs');
 
 // var Auth = (require('./lib/auth.js')).Auth;
 // var Models = (require('./lib/models.js')).Models;
