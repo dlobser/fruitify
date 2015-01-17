@@ -7,14 +7,14 @@
 <meta name="copyright" content="" />
 <meta name="application-name" content="" />
 
-<!-- for Facebook -->          
+<!-- for Facebook -->
 <meta property="og:title" content="Fruitify!" />
 <meta property="og:type" content="Someday soon this webgl app will send full color 3D printed models straight to Shapeways, for now, have fun" />
 <meta property="og:image" content="http://tileableart.com/code/apple/fruitify.png" />
 <meta property="og:url" content="http://tileableart.com/code/apple" />
 <meta property="og:description" content="Make 3D printed rainbow fruits" />
 
-<!-- for Twitter -->          
+<!-- for Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="" />
 <meta name="twitter:description" content="" />
@@ -23,7 +23,7 @@
 
 <html>
   <head>
-  
+
     <title>Fruitify!</title>
 	<link rel="shortcut icon" href="assets/icon.png">
  	<link href="lib/jqueryui/jquery-ui.css" rel="stylesheet">
@@ -44,15 +44,15 @@
 	}
 	 body {
         overflow: hidden;
-	   font-family:  sans-serif; sans-serif; 
+	   font-family:  sans-serif; sans-serif;
 	   font-weight: 300;
-	
+
     }
     a:link {color:#999999;text-decoration:none;}      /* unvisited link */
 	a:visited {color:#999999;text-decoration:none;}  /* visited link */
 	a:hover {color:#333333;text-decoration:none;}  /* mouse over link */
 	a:active {color:#999999;text-decoration:none;}  /* selected link */
-   
+
 	.buttonb {
 		-moz-box-shadow:inset 0px 6px 3px 0px #ffffff;
 		-webkit-box-shadow:inset 0px 6px 3px 0px #ffffff;
@@ -90,8 +90,8 @@
 	*:focus {
 	    outline: none;
 	}
-    
-    #editor { 
+
+    #editor {
         margin: 0;
         margin-right:50%;
         margin-bottom:100px;
@@ -108,6 +108,9 @@
     }
     h3{
     	font-family: 'Lato', sans-serif;
+    }
+    #thumbnail{
+    	display: none;
     }
     </style>
 
@@ -143,7 +146,7 @@
 		</div>
 		<h3 style="font-size:.7em"><i class="fa fa-dot-circle-o fa-lg"></i><span style="position:absolute;margin-left:20px;margin-top:-2px">Shape</span></h3>
 		<div  id="margin" style="background:transparent;overflow:auto">
-	    <div style="margin-left:-5px;margin-top:-10px;position:relative;width:150px;background:#aaddff;text-align:center"> 
+	    <div style="margin-left:-5px;margin-top:-10px;position:relative;width:150px;background:#aaddff;text-align:center">
 	    	<button id="opener" class="buttonb" style="width:150px;height:40px;font-size:1em;z-index:1000;margin-bottom:0px">Presets</button>
 	    	<div id="dialog" title="Presets" style="width:1000px">
 			  <button id="poop" onClick="applyPreset2(1)"><img src="assets/images/Fruitify_apple.png" width="100px"></a></button>
@@ -160,7 +163,7 @@
 			  <button id="poop" onClick="applyPreset2(12)"><img src="assets/images/Fruitify_jewel.png" width="100px"></a></button>
 
 	    	<!-- <select id="select" style="border-radius:-5px;margin-bottom:10px;width:150px;height:40px;font-size:.8em;text-align:center" class="buttonb" onChange="applyPreset2()">
-				
+
 				<option value="1">presets
 				<option value="2"> apple
 				<option value="3"> mushroom
@@ -243,7 +246,7 @@
     			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save b&w .obj" onclick="saver()"class="buttonb">
     			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save image" onclick="saveIMG('Fruitify')"class="buttonb">
     			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save data to console" onclick="writeData(true)"class="buttonb">
-
+    			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save to database" onclick="saveToDb()"class="buttonb">
     		</div>
 
 	  </div>
@@ -260,7 +263,7 @@
 	  </div>
 
 	</div>
-	 
+
 	<div id="container" style="position:absolute;background:radial-gradient(#ffffff,#ccddff,#5599ff)"></div>
 
 
@@ -278,10 +281,29 @@
 		<script src="sketches/appleUI2.js"></script>
 		<script src="sketches/appleObj.js"></script>
 		<script src="sketches/apple.js"></script>
+		<script type="text/javascript">
+		function saveToDb(){
+			if(document.getElementById('thumbnail')!==null){
+				document.getElementById('container').removeChild(document.getElementById('thumbnail'));
+			}
+			$.ajax({
+				url: '/upload',
+				method: 'POST',
+				data:{
+					'data': writeData(),
+					'imgURL': makeThumbnail()
+				},
+				dataType: 'json',
+				error: function(err){
+					console.error(err);
+				},
+				success: function(data){
+					console.log(data);
+				}
+			})
+		}
+		</script>
 
-
-
-		
 		<script type="text/javascript">var switchTo5x=true;</script>
 		<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 		<script type="text/javascript">stLight.options({publisher: "a610c381-0a02-4883-8d96-cfc4ce601185", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
