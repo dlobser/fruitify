@@ -1,0 +1,295 @@
+
+	<!-- for Google -->
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+<meta name="author" content="" />
+<meta name="copyright" content="" />
+<meta name="application-name" content="" />
+
+<!-- for Facebook -->          
+<meta property="og:title" content="Fruitify!" />
+<meta property="og:type" content="Someday soon this webgl app will send full color 3D printed models straight to Shapeways, for now, have fun" />
+<meta property="og:image" content="http://tileableart.com/code/apple/fruitify.png" />
+<meta property="og:url" content="http://tileableart.com/code/apple" />
+<meta property="og:description" content="Make 3D printed rainbow fruits" />
+
+<!-- for Twitter -->          
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:image" content="" />
+
+
+<html>
+  <head>
+  
+    <title>Fruitify!</title>
+	<link rel="shortcut icon" href="assets/icon.png">
+ 	<link href="lib/jqueryui/jquery-ui.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+ 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<style>
+    <style>
+    #container{
+		width:500px
+	}
+	body{
+		background-color:white;
+		margin:0;
+		padding:0;
+		text-decoration:none;
+		/*cursor: none !important; */
+	}
+	 body {
+        overflow: hidden;
+	   font-family:  sans-serif; sans-serif; 
+	   font-weight: 300;
+	
+    }
+    a:link {color:#999999;text-decoration:none;}      /* unvisited link */
+	a:visited {color:#999999;text-decoration:none;}  /* visited link */
+	a:hover {color:#333333;text-decoration:none;}  /* mouse over link */
+	a:active {color:#999999;text-decoration:none;}  /* selected link */
+   
+	.buttonb {
+		-moz-box-shadow:inset 0px 6px 3px 0px #ffffff;
+		-webkit-box-shadow:inset 0px 6px 3px 0px #ffffff;
+		box-shadow:inset 0px 14px 13px 0px #ffffff;
+		background-color:#f9f9f9;
+		border-radius:0px;
+		border:1px solid #dcdcdc;
+		display:inline-block;
+		color:#666666;
+		font-family:Arial;
+		font-size:10px;
+		font-weight:bold;
+		font-style:normal;
+		height:18px;
+		line-height:5px;
+		width:59px;
+		text-decoration:none;
+		text-align:center;
+		text-shadow:-3px -1px 7px #ffffff;
+	}.buttonb:hover {
+		background-color:#e9e9e9;
+	}.buttonb:active {
+		position:relative;
+		top:1px;
+	}
+	}.buttonb:visited {
+		text-decoration:none !important;
+		border:none;
+	}
+	}.buttonb:focus {
+		text-decoration:none !important;
+		border:none;
+		outline:none;
+	}
+	*:focus {
+	    outline: none;
+	}
+    
+    #editor { 
+        margin: 0;
+        margin-right:50%;
+        margin-bottom:100px;
+        position: absolute;
+        z-index:1;
+        background-color:transparent;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    #margin{
+    	margin-left:-30px;
+    }
+    h3{
+    	font-family: 'Lato', sans-serif;
+    }
+    </style>
+
+
+
+	</head>
+
+<body>
+
+
+<div id="openDialog" title="Welcome" style="display:none;z-index:10000">
+	<a href="http://www.shapeways.com/shops/hilobster" style="text-align:center"><img src="https://images4.sw-cdn.net/model/picture/625x465_677006_557690_1346971756.jpg" width="150px"></a>
+  <p>Welcome to Fruitify, <span style="font-size:.8em">watch the demo, start playing or choose a preset</span></p>
+  <iframe width="250" height="180" src="//www.youtube.com/embed/LENPXq9oFys" frameborder="0" allowfullscreen></iframe><br><br>
+  <button id="opener2" class="buttonb" style="width:250px;height:50px;font-size:1.5em;z-index:1000;margin-bottom:10px">Presets</button>
+</div>
+
+
+<div id="nothing" style = "display:block;position:absolute;background:radial-gradient(#ffffff,#ccddff,#5599ff);width:100%;height:100%">
+	<div style="text-align:center;font-size:3em;margin-top:250px">Fruitify Is Loading...</div>
+</div>
+
+<div id="all" style = "display:none;position:absolute">
+
+	<div id="accordion" style="width:160px;position:absolute;z-index:20">
+		<h3 style="margin-left:-3px;padding-bottom:15px"><i class="fa fa-heart" style="margin-left:-10px"></i> <div style="margin-left:8px;margin-top:-25px">&nbsp;&nbsp;&nbsp;Fruitify!</div><div style="position:absolute;margin-left:15px;margin-top:0px;font-size:.5em;padding-bottom:20px">Full Color 3D Prints</div></h3>
+
+		<div id="margin" style="margin-left:-10px;font-size:.6em">
+			&nbsp;<a href="http://www.shapeways.com/shops/hilobster" style="text-align:center"><img src="https://images4.sw-cdn.net/model/picture/625x465_677006_557690_1346971756.jpg" width="130px"></a><br><br>
+			&nbsp;&nbsp;A late night is no reason to frown. Cast open your windows and your doors, let the gentle breeze flow through your house. You are not alone! You are part of everything, you are one with everything! But if you are prone to forgetting such things, use your springtime to make a fruit from the airy light of your enthusiasms and taste of its sweet nectar during your cold winters.<br><br><a href="http://www.dlobser.com"> &nbsp;&nbsp;&nbsp;&nbsp;- David Lobser</a>.
+
+
+		</div>
+		<h3 style="font-size:.7em"><i class="fa fa-dot-circle-o fa-lg"></i><span style="position:absolute;margin-left:20px;margin-top:-2px">Shape</span></h3>
+		<div  id="margin" style="background:transparent;overflow:auto">
+	    <div style="margin-left:-5px;margin-top:-10px;position:relative;width:150px;background:#aaddff;text-align:center"> 
+	    	<button id="opener" class="buttonb" style="width:150px;height:40px;font-size:1em;z-index:1000;margin-bottom:0px">Presets</button>
+	    	<div id="dialog" title="Presets" style="width:1000px">
+			  <button id="poop" onClick="applyPreset2(1)"><img src="assets/images/Fruitify_apple.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(2)"><img src="assets/images/Fruitify_mushroom.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(3)"><img src="assets/images/Fruitify_hamburger.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(4)"><img src="assets/images/Fruitify_infinity.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(5)"><img src="assets/images/Fruitify_spaceship.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(6)"><img src="assets/images/Fruitify_cat.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(7)"><img src="assets/images/Fruitify_butterfly.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(8)"><img src="assets/images/Fruitify_pear.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(9)"><img src="assets/images/Fruitify_pearl.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(10)"><img src="assets/images/Fruitify_speaker.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(11)"><img src="assets/images/Fruitify_jeebus.png" width="100px"></a></button>
+			  <button id="poop" onClick="applyPreset2(12)"><img src="assets/images/Fruitify_jewel.png" width="100px"></a></button>
+
+	    	<!-- <select id="select" style="border-radius:-5px;margin-bottom:10px;width:150px;height:40px;font-size:.8em;text-align:center" class="buttonb" onChange="applyPreset2()">
+				
+				<option value="1">presets
+				<option value="2"> apple
+				<option value="3"> mushroom
+				<option value="4"> hamburger
+				<option value="5"> infinity
+				<option value="6"> spaceship
+				<option value="7"> happy cat
+				<option value="8"> butterfly
+				<option value="9"> pear
+				<option value="10">jewel
+				<option value="11">speaker
+				<option value="12">jeebus
+				<option value="13">jewel
+			</select> -->
+		<!-- </div> -->
+			</div>
+			<select id="selectOuter" style="margin-top:0px;z-index:30;width:150px;height:20px;font-size:.8em;z-index:1000;position:relative" class="buttonb" onChange="setOuterShape()">
+				<option value="1">outside shape</option>
+				<option value="2">circle</option>
+				<option value="3">mushroom</option>
+				<option value="4">apple</option>
+				<option value="5">heart</option>
+				<option value="6">infinity</option>
+
+			</select>
+
+		<canvas id="myCanvas" width="150" height="150" style="border:2px;border-color:black;padding:0px;border-radius:0px"></canvas></div>
+
+			<div style="margin-left:-5px;position:relative;width:150px;background:#aaddff;text-align:center">
+
+				<select id="selectInner" style="margin-top:0px;width:150px;height:20px;font-size:.8em;position:relative" class="buttonb" onChange="setInnerShape()">
+					<option value="1">inside shape</option>
+					<option value="2">circle</option>
+					<option value="3">mushroom</option>
+					<option value="4">apple</option>
+					<option value="5">heart</option>
+					<option value="6">infinity</option>
+
+				</select>
+
+			<canvas id="myCanvas2" width="150" height="150" style="padding:0px;border-radius:0px"></canvas></div><br>
+
+			<div id="sliders" style="position:relative;width:150px;margin-left:-5px;margin-top:-15px"></div>
+	  </div>
+
+
+	  <h3 style="font-size:.7em"><i class="fa fa-eyedropper fa-lg"></i><span style="position:absolute;margin-left:17px;margin-top:-2px">Color<span></h3>
+	  <div  id="margin" style="background:transparent">
+  		<div style="text-align:center;margin-left:-5px;position:relative;width:150px;background:#99ccff">color<canvas id="myCanvas3" width="150" height="150" style="padding:0px;border-radius:0px"></canvas>detail</div>
+
+			<div style="margin-left:-5px;margin-top:0px"></div>
+			<div id="slider"  style="position:relative;width:150px;margin-left:-5px;margin-top:0px;border:0px"></div>
+			<div style="text-align:center;margin-left:-5px;position:relative;width:150px;background:#99ccff">tweak</div>
+
+			<div id="slider3"  style="position:relative;width:150px;margin-left:-5px;margin-top:0px;border:0px"></div>
+			<div id = 'text3' style='position:relative;margin-left:120px;margin-top:-1.5em;font-size:.4em'></div>
+
+
+	  	</div>
+	  <h3 style="font-size:.7em"><i class="fa fa-asterisk fa-lg"></i><span style="position:absolute;margin-left:18px;margin-top:-2px">Advanced</span></h3>
+	  <div style="text-align:center;margin-left:-35px;position:relative;background:transparent">
+	  	    <input style="font-size:.7em;width:150px;height:30px" type="button" id="buttonid" value="Draw center shape" onclick="drawCenterShape()"class="buttonb">
+	  	    <input style="font-size:.7em;width:150px;height:30px" type="button" id="buttonid" value="Draw outer shell" onclick="toDrawLathe()"class="buttonb">
+	  	    <input style="font-size:.7em;width:150px;height:30px" type="button" id="symmetryButton" value="Symmetry" onclick="isSymmetry()"class="buttonb">
+	  	    <input style="font-size:.7em;width:150px;height:30px" type="button" id="stemButton" value="Stem Display" onclick="toDrawStem()" class="buttonb">
+	  	    <div style="text-align:center;margin-left:0px;position:relative;width:150px;background:#99ccff">Stem Length</div>
+	  	    <div id="stemSlider"  style="position:relative;width:150px;margin-left:0px;margin-top:0px;border:0px"></div>
+	  	    <input style="font-size:.7em;width:150px;height:30px" type="button" id="leafButton" value="Leaf Display" onclick="toDrawLeaf()" class="buttonb">
+			<div style="text-align:center;margin-left:0px;position:relative;width:150px;background:#99ccff">Leaf Rotation</div>
+	  	    <div id="leafRotation"  style="position:relative;width:150px;margin-left:0px;margin-top:0px;border:0px"></div>
+			<div style="text-align:center;margin-left:0px;position:relative;width:150px;background:#99ccff">Leaf Size</div>
+			<div id="leafSize"  style="position:relative;width:150px;margin-left:0px;margin-top:0px;border:0px"></div>
+	  	    <input style="font-size:.7em;width:150px;height:30px" type="button" id="buttonid" value="view high res" onclick="upResAndSave('',true)"class="buttonb">
+
+	  </div>
+	 <h3 style="font-size:.7em">  	<i class="fa fa-camera-retro fa-lg"> </i><span style="position:absolute;margin-left:17px;margin-top:-2px">Save / Export</span></h3>
+	  	<div  id="margin" style="margin-left:-35px;background:transparent">
+    		<div id="tabs-5" style="text-align:center;font-size:.8em">
+    			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save color .x3d" onclick="upResAndSave('fruitify.x3d')"class="buttonb">
+    			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save b&w .obj" onclick="saver()"class="buttonb">
+    			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save image" onclick="saveIMG('Fruitify')"class="buttonb">
+    			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save data to console" onclick="writeData(true)"class="buttonb">
+
+    		</div>
+
+	  </div>
+
+
+	  <h3 style="font-size:.7em"><i class="fa fa-facebook  fa-lg"></i><span style="position:absolute;margin-left:23px;margin-top:-2px">Share</span></h3>
+	  <div id="margin" style="padding-left:50px;padding-right:0px;background:transparent">
+	    	<span class='st_sharethis_large' displayText='ShareThis'></span>
+			<span class='st_facebook_large' displayText='Facebook'></span>
+			<span class='st_twitter_large' displayText='Tweet'></span>
+			<span class='st_linkedin_large' displayText='LinkedIn'></span>
+			<span class='st_pinterest_large' displayText='Pinterest'></span>
+			<span class='st_email_large' displayText='Email'></span>
+	  </div>
+
+	</div>
+	 
+	<div id="container" style="position:absolute;background:radial-gradient(#ffffff,#ccddff,#5599ff)"></div>
+
+
+</div>
+		<script src="lib/jqueryui/external/jquery/jquery.js"></script>
+
+		<script src="lib/jqueryui/jquery-ui.min.js"></script>
+		<script src="lib/three.js"></script>
+		<script src="lib/library.js"></script>
+		<script src="lib/blob.js"></script>
+
+		<script src="lib/TREE.js"></script>
+
+		<script src="lib/appleTemplate.js"></script>
+		<script src="sketches/appleUI2.js"></script>
+		<script src="sketches/appleObj.js"></script>
+		<script src="sketches/apple.js"></script>
+
+
+
+		
+		<script type="text/javascript">var switchTo5x=true;</script>
+		<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+		<script type="text/javascript">stLight.options({publisher: "a610c381-0a02-4883-8d96-cfc4ce601185", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+			<script>
+
+		init();
+		</script>
+	</body>
+</html>
+
+
