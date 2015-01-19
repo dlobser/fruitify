@@ -87,9 +87,9 @@ app.get('/records/:num', function (req, res) {
     //res.render('gallery.html');
 });
 
-app.get('/sketches/:data', function (req, res) {
+app.get('/sketches/:id', function (req, res) {
   var query = {
-    'data': req.params.data
+    '_id': req.params.id
   };
   var select = 'data';
   var option = {
