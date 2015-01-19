@@ -72,11 +72,16 @@ app.get('/gallery', function (req, res) {
   var query = {};
   var select = 'data imgURL';
   var option = {
-    limit: 1
+    limit: 10
   };
-  Record.find(query, select, option, function (err, data) {
+  Record.find(query, select, option, function (err, _data) {
       if (err) return console.error(err);
-      res.send(data);
+      //res.send(data);
+      res.render('gallery.html', function (err, _data) {
+        if (err) return console.error(err);
+        res.send(_data);
+        console.log(_data);
+      })
     })
     //res.render('gallery.html');
 });
