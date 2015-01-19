@@ -282,28 +282,52 @@
 		<script src="sketches/appleObj.js"></script>
 		<script src="sketches/apple.js"></script>
 		<script type="text/javascript">
-		function saveToDb(){
-			if(document.getElementById('thumbnail')!==null){
-				document.getElementById('container').removeChild(document.getElementById('thumbnail'));
-			}
-			$.ajax({
-				url: '/upload',
-				method: 'POST',
-				data:{
-					'data': writeData(),
-					'imgURL': makeThumbnail()
-				},
-				dataType: 'json',
-				error: function(err){
-					console.error(err);
-				},
-				success: function(data){
-					console.log(data);
+			function saveToDb(){
+				if(document.getElementById('thumbnail')!==null){
+					document.getElementById('container').removeChild(document.getElementById('thumbnail'));
 				}
-			})
-		}
-		</script>
+				$.ajax({
+					url: '/upload',
+					method: 'POST',
+					data:{
+						'data': writeData(),
+						'imgURL': makeThumbnail()
+					},
+					dataType: 'json',
+					error: function(err){
+						console.error(err);
+					},
+					success: function(data){
+						console.log(data);
+					}
+				})
+			}
 
+			function askForRebuildShape(id){
+				$.ajax({
+					url: '/'+id+'/shape',
+					method: 'GET',
+					dataType: 'json',
+					error: function(err){
+						console.error(err);
+					},
+					success: function(data){
+						console.log(data[0].data);
+						setTimeout(function(){
+							readData(JSON.parse(data[0].data));
+						},1000);
+
+					}
+				})
+			}
+
+			$(document).ready(function(){
+				var id = document.location.pathname.slice(1);
+				if(id.length){
+					askForRebuildShape(id);
+				}
+			});
+		</script>
 		<script type="text/javascript">var switchTo5x=true;</script>
 		<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 		<script type="text/javascript">stLight.options({publisher: "a610c381-0a02-4883-8d96-cfc4ce601185", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>

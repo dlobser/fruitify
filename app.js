@@ -87,7 +87,11 @@ app.get('/records/:num', function (req, res) {
     //res.render('gallery.html');
 });
 
-app.get('/sketches/:id', function (req, res) {
+app.get('/:id', function (req, res) {
+  res.render('index.html');
+});
+
+app.get('/:id/shape', function (req, res) {
   var query = {
     '_id': req.params.id
   };
@@ -98,7 +102,7 @@ app.get('/sketches/:id', function (req, res) {
   Record.find(query, select, option, function (err, data) {
     if (err) return console.error(err);
     res.send(data);
-  })
+  });
 });
 // main page - display the card form
 // app.get('/turbine', function (request, response) {
