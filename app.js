@@ -69,21 +69,36 @@ app.post('/upload', function (req, res) {
 });
 
 app.get('/gallery', function (req, res) {
+  res.render('gallery.html');
+});
+
+app.get('/records/:num', function (req, res) {
+
   var query = {};
   var select = 'data imgURL';
   var option = {
-    limit: 10
+    limit: 2,
+    skip: req.params.num
   };
-  Record.find(query, select, option, function (err, _data) {
+  Record.find(query, select, option, function (err, data) {
       if (err) return console.error(err);
-      //res.send(data);
-      res.render('gallery.html', function (err, _data) {
-        if (err) return console.error(err);
-        res.send(_data);
-        console.log(_data);
-      })
+      res.send(data);
     })
     //res.render('gallery.html');
+});
+
+app.get('/sketches/:data', function (req, res) {
+  var query = {
+    'data': req.params.data
+  };
+  var select = 'data';
+  var option = {
+    limit: 1
+  };
+  Record.find(query, select, option, function (err, data) {
+    if (err) return console.error(err);
+    res.send(data);
+  })
 });
 // main page - display the card form
 // app.get('/turbine', function (request, response) {
