@@ -27,14 +27,20 @@ sc1 = {
 
 		R = new rainbow();
 		scene.add(R.tubeParent);
+		spp = sphere(10);
+		spp.material = cShader();
+		// scene.add(spp);
 
 
  },
 
 	draw: function (time) {
 
-		// if(typeof spp!=='undefined')
-		// 	spp.rotation.y+=.1;
+		cShaders.forEach(function(s){
+			s.uniforms["camMat"].value = camera.matrixWorld;
+		})
+		if(typeof spp!=='undefined')
+			spp.rotation.y+=.1;
 		lightGroup.lookAt(camera.position);
 		checkAndUpdateSliders();
 		if(undo.length>50)
