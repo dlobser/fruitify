@@ -1,14 +1,13 @@
-var config = require('./config.json');
-
+var config = require('../config.json');
+var session = require('cookie-session');
 var shapeways = require('shapeways');
 
 exports.login = function (req, res) {
-  console.log('uuu')
-  var callbackUrl = req.protocol + '://' + req.host;
+  var callbackUrl = req.protocol + '://' + req.hostname;
   if (config.port != 80) {
     callbackUrl += ':' + config.port;
   }
-  console.log(callbackUrl);
+  callbackUrl += '/callback';
   var client = new shapeways.client({
     consumerKey: config.app.key,
     consumerSecret: config.app.secret,
@@ -17,11 +16,11 @@ exports.login = function (req, res) {
     if (!error && authUrl) {
       req.session.oauthToken = client.oauthToken;
       req.session.oauthSecret = client.oauthSecret;
-      //res.writeHead(302, {
-      //Location: authUrl + "&oauth_callback=" + callbackUrl
-      res.redirect(authUrl + "&oauth_callback=" + callbackUrl);
-      //});
-      //return res.end();
+      res.writeHead(302, {
+        Location: authUrl + "&oauth_callback=" + callbackUrl
+          //res.redirect(authUrl + "&oauth_callback=" + callbackUrl);
+      });
+      return res.end();
     }
 
     res.render('error', {

@@ -1,21 +1,27 @@
 var express = require('express');
 var ejs = require('ejs');
 var app = express();
-var bodyParser = require('body-parser');
-
-var mongoose = require('mongoose');
-var config = require('./config.json');
-var Record = require('./server/model.js');
 var fs = require('fs');
 
-var auth = require('./server/auth.js');
+var config = require('./config.json');
+var routes = require('./routes/index.js');
+var auth = require('./routes/auth.js');
+var mongoose = require('mongoose');
 
-app.set('views', __dirname);
-
+app.set('views', __dirname + '/views');
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
-
 app.use(express.static(__dirname + '/public'));
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  extended: true
+}));
+var session = require('cookie-session');
+app.use(session({
+  keys: config.app.key
+}));
 
 var port = process.env.PORT || config.port;
 app.listen(port, function () {
@@ -30,43 +36,11 @@ db.once('open', function callback() {
   console.log('yay! database connected');
 });
 
-app.use(bodyParser.urlencoded({
-  limit: '50mb',
-  extended: true
-}));
+app.get('/', routes.index);
 
-var jsonParser = bodyParser.json();
+app.post('/upload', routes.uploadThumbnail);
 
-app.get('/', function (req, res) {
-  // if (!isLoggedIn(req.session)) {
-  //   return res.redirect('/login');
-  // } else {
-  //   return res.redirect('/turbine');
-  // }
-  res.render('index.html');
-});
-
-app.post('/upload', function (req, res) {
-
-  //console.log(req.body.data, req.body.imgURL);
-
-  if (!req.body.data) {
-    return res.send('need data');
-  }
-  if (!req.body.imgURL) {
-    return res.send('need imgURL');
-  }
-
-  var record = new Record();
-  record.data = req.body.data;
-  record.imgURL = req.body.imgURL;
-  record.save();
-  //res.send('saved');
-});
-
-app.get('/gallery', function (req, res) {
-  res.render('gallery.html');
-});
+app.get('/gallery', routes.gallery);
 
 app.get('/records/:num', function (req, res) {
 
@@ -83,27 +57,15 @@ app.get('/records/:num', function (req, res) {
     //res.render('gallery.html');
 });
 
-app.get('/:id', function (req, res) {
-  res.render('index.html');
-});
-
-app.get('/:id/shape', function (req, res) {
-  var query = {
-    '_id': req.params.id
-  };
-  var select = 'data';
-  var option = {
-    limit: 1
-  };
-  Record.find(query, select, option, function (err, data) {
-    if (err) return console.error(err);
-    res.send(data);
-  });
-});
-
 app.get('/login', auth.login);
 
 app.get('/callback', auth.callback);
+
+app.get('/:id/shape', routes.shapeRebuild);
+
+//this should always be in the bottom of this file
+app.get('/:id', routes.shapeShow);
+
 // main page - display the card form
 // app.get('/turbine', function (request, response) {
 
