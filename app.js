@@ -18,10 +18,16 @@ app.use(bodyParser.urlencoded({
   limit: '50mb',
   extended: true
 }));
-var session = require('cookie-session');
+// var session = require('cookie-session');
+// app.use(session({
+//   keys: ['']
+// }));
+var session = require('express-session');
 app.use(session({
-  keys: config.app.key
-}));
+  secret: config.app.secret,
+  resave: false,
+  saveUninitialized: true
+}))
 
 var port = process.env.PORT || config.port;
 app.listen(port, function () {
@@ -42,20 +48,7 @@ app.post('/upload', routes.uploadThumbnail);
 
 app.get('/gallery', routes.gallery);
 
-app.get('/records/:num', function (req, res) {
-
-  var query = {};
-  var select = 'data imgURL';
-  var option = {
-    limit: 2,
-    skip: req.params.num
-  };
-  Record.find(query, select, option, function (err, data) {
-      if (err) return console.error(err);
-      res.send(data);
-    })
-    //res.render('gallery.html');
-});
+app.get('/records/:num', routes.getRecord);
 
 app.get('/login', auth.login);
 

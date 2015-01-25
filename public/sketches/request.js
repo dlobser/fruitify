@@ -40,6 +40,10 @@ function sendToSW() {
   $.ajax({
     url: '/login',
     method: 'GET',
+    // dataType: 'json',
+    // data: {
+    //   'test': 2353
+    // }
     error: function (err) {
       console.error(err);
     },

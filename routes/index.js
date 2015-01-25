@@ -51,3 +51,18 @@ exports.shapeRebuild = function (req, res) {
     res.send(data);
   });
 }
+
+exports.getRecord = function (req, res) {
+
+  var query = {};
+  var select = 'data imgURL';
+  var option = {
+    limit: 2,
+    skip: req.params.num
+  };
+  Record.find(query, select, option, function (err, data) {
+      if (err) return console.error(err);
+      res.send(data);
+    })
+    //res.render('gallery.html');
+}

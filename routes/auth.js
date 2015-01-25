@@ -1,5 +1,4 @@
 var config = require('../config.json');
-var session = require('cookie-session');
 var shapeways = require('shapeways');
 
 exports.login = function (req, res) {
@@ -16,10 +15,11 @@ exports.login = function (req, res) {
     if (!error && authUrl) {
       req.session.oauthToken = client.oauthToken;
       req.session.oauthSecret = client.oauthSecret;
+      console.log(req.session.oauthToken, req.session.oauthSecret)
       res.writeHead(302, {
         Location: authUrl + "&oauth_callback=" + callbackUrl
-          //res.redirect(authUrl + "&oauth_callback=" + callbackUrl);
       });
+      console.log(authUrl + "&oauth_callback=" + callbackUrl)
       return res.end();
     }
 
@@ -28,6 +28,34 @@ exports.login = function (req, res) {
       error: error,
     });
   });
+
+  // var callbackUrl = req.protocol + '://' + req.hostname;
+  // if (config.port != 80) {
+  //   callbackUrl += ':' + config.port;
+  // }
+  // callbackUrl += '/callback';
+  // var client = new shapeways.client({
+  //   consumerKey: config.app.key,
+  //   consumerSecret: config.app.secret,
+  //   authorizationCallback: callbackUrl,
+  // }, function (error, authUrl) {
+  //   if (!error && authUrl) {
+  //     req.session.oauthToken = client.oauthToken;
+  //     req.session.oauthSecret = client.oauthSecret;
+  //     // res.writeHead(302, {
+  //     //   Location: authUrl + "&oauth_callback=" + callbackUrl
+  //     // });
+  //     console.log(req.session.oauthToken, req.session.oauthSecret)
+  //     res.redirect(authUrl + "&oauth_callback=" + callbackUrl);
+  //     //return res.end();
+  //     return;
+  //   }
+
+  //   res.render('error', {
+  //     title: config.app.name + ': Error Authorizing with Shapeways',
+  //     error: error,
+  //   });
+  // });
 };
 
 exports.callback = function (req, res) {
