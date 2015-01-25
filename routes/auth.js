@@ -16,11 +16,13 @@ exports.login = function (req, res) {
       req.session.oauthToken = client.oauthToken;
       req.session.oauthSecret = client.oauthSecret;
       console.log(req.session.oauthToken, req.session.oauthSecret)
-      res.writeHead(302, {
-        Location: authUrl + "&oauth_callback=" + callbackUrl
-      });
+        // res.writeHead(302, {
+        //   Location: authUrl + "&oauth_callback=" + callbackUrl
+        // });
       console.log(authUrl + "&oauth_callback=" + callbackUrl)
-      return res.end();
+      req.redirect(authUrl + "&oauth_callback=" + callbackUrl)
+        //return res.end();
+      return;
     }
 
     res.render('error', {
