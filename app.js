@@ -101,13 +101,9 @@ app.get('/:id/shape', function (req, res) {
   });
 });
 
-app.get('/login', function (req, res) {
-  auth.login;
-});
+app.get('/login', auth.login);
 
-app.get('/callback', function (req, res) {
-  auth.callback;
-});
+app.get('/callback', auth.callback);
 // main page - display the card form
 // app.get('/turbine', function (request, response) {
 

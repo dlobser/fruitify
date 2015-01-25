@@ -3,6 +3,7 @@ var config = require('./config.json');
 var shapeways = require('shapeways');
 
 exports.login = function (req, res) {
+  console.log('uuu')
   var callbackUrl = req.protocol + '://' + req.host;
   if (config.port != 80) {
     callbackUrl += ':' + config.port;
