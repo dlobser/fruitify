@@ -8,6 +8,7 @@
     "mongoose": "^3.8.21",
     "oauth": "^0.9.12",
     "querystring": "^0.2.0",
-    "shapeways": "^1.0.2"
+    "shapeways": "^1.0.2",
+    "urllib": "^2.2.2"
   }
 }
