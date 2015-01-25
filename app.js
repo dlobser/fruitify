@@ -1,15 +1,14 @@
-var express = require('express'); //
-var ejs = require('ejs'); //embedded javascript template engine
+var express = require('express');
+var ejs = require('ejs');
 var app = express();
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
-var config = require('./server/config.json');
+var config = require('./config.json');
 var Record = require('./server/model.js');
 var fs = require('fs');
 
-// var Auth = (require('./lib/auth.js')).Auth;
-// var Models = (require('./lib/models.js')).Models;
+var auth = require('./server/auth.js');
 
 app.set('views', __dirname);
 
@@ -17,9 +16,8 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 
 app.use(express.static(__dirname + '/public'));
-/*********** END SERVER CONFIGURATION *****************/
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || config.port;
 app.listen(port, function () {
   console.log('Listening on ' + port);
 });
@@ -32,13 +30,11 @@ db.once('open', function callback() {
   console.log('yay! database connected');
 });
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
   limit: '50mb',
   extended: true
 }));
 
-// create application/json parser
 var jsonParser = bodyParser.json();
 
 app.get('/', function (req, res) {
@@ -103,6 +99,14 @@ app.get('/:id/shape', function (req, res) {
     if (err) return console.error(err);
     res.send(data);
   });
+});
+
+app.get('/login', function (req, res) {
+  auth.login;
+});
+
+app.get('/callback', function (req, res) {
+  auth.callback;
 });
 // main page - display the card form
 // app.get('/turbine', function (request, response) {
