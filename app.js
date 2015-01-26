@@ -5,6 +5,7 @@ var fs = require('fs');
 
 var config = require('./config.json');
 var routes = require('./routes/index.js');
+var upload = require('./routes/upload.js');
 var auth = require('./routes/auth.js');
 var mongoose = require('mongoose');
 
@@ -63,7 +64,7 @@ app.get('/login', auth.login);
 
 app.get('/callback', auth.callback);
 
-app.post('/uploadModel', auth.uploadModel);
+app.post('/uploadModel', upload.uploadModel);
 
 app.get('/shape/:id', routes.shapeRebuild);
 
