@@ -66,26 +66,9 @@ app.get('/callback', auth.callback);
 
 app.post('/uploadModel', upload.uploadModel);
 
+app.post('/uploadModelThumbnail', upload.uploadModelThumbnail);
+
 app.get('/shape/:id', routes.shapeRebuild);
 
 //this should always be in the bottom of this file
 app.get('/:id', routes.shapeShow);
-
-// app.post('/upload', function (req, res) {
-
-//   var fs = require('fs');
-//   var buffer = new Buffer(req.body.file);
-//   fs.writeFile("./static/tree.obj", req.body.file, function (err) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send(req.body);
-//       return models.putModel("./static/tree.obj", req.session.oauth_access_token, req.session.oauth_access_token_secret, function (callback) {
-//         return res.render('upload_success.html', {
-//           "callback": JSON.parse(callback),
-//           "server": cfg.API_SERVER
-//         });
-//       });
-//     }
-//   });
-// });
