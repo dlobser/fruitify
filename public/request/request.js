@@ -37,8 +37,8 @@ function askForRebuildShape(id) {
 }
 
 function sendToSW() {
+  cosole.log('(ᵔᴥᵔ)uploading...');
   $.ajax({
-    //url: 'http://api.shapeways.com/models/v1/' + data,
     url: '/uploadModel',
     method: 'POST',
     data: {
