@@ -480,7 +480,7 @@ function makeThumbnail() {
 
 		var thumbnailCtx = thumbnail.getContext('2d');
 
-		thumbnailCtx.drawImage(ctx, width * 0.125, height * 0.2, width * 0.75, width * 0.75 * 3 / 4, 0, 0, 320, 240);
+		thumbnailCtx.drawImage(ctx, width * 0.125, height * 0.15, width * 0.75, width * 0.75 * 3 / 4, 0, 0, 320, 240);
 
 		thumbnail.setAttribute('id', 'thumbnail');
 		document.getElementById('container').appendChild(thumbnail);

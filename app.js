@@ -1,25 +1,45 @@
-var express = require('express'); //
-var ejs = require('ejs'); //embedded javascript template engine
+var express = require('express');
+var ejs = require('ejs');
 var app = express();
-var bodyParser = require('body-parser');
-
-var mongoose = require('mongoose');
-var config = require('./server/config.json');
-var Record = require('./server/model.js');
 var fs = require('fs');
 
-// var Auth = (require('./lib/auth.js')).Auth;
-// var Models = (require('./lib/models.js')).Models;
+var config = require('./config.json');
+var routes = require('./routes/index.js');
+var upload = require('./routes/upload.js');
+var auth = require('./routes/auth.js');
+var mongoose = require('mongoose');
 
-app.set('views', __dirname);
+var http = require('http');
+var path = require('path');
+var shapeways = require('shapeways');
 
+app.set('views', __dirname + '/views');
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
-
 app.use(express.static(__dirname + '/public'));
-/*********** END SERVER CONFIGURATION *****************/
 
-var port = process.env.PORT || 3000;
+var bodyParser = require('body-parser');
+// create application/json parser
+var jsonParser = bodyParser.json();
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  extended: true
+}));
+// var session = require('cookie-session');
+// app.use(session({
+//   keys: ['']
+// }));
+var session = require('express-session');
+app.use(session({
+  secret: 'shapeways',
+  resave: false,
+  saveUninitialized: true
+}))
+
+//app.use(express.methodOverride());
+app.use(auth.middleware);
+
+var port = process.env.PORT || config.port;
 app.listen(port, function () {
   console.log('Listening on ' + port);
 });
@@ -32,141 +52,21 @@ db.once('open', function callback() {
   console.log('yay! database connected');
 });
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-  limit: '50mb',
-  extended: true
-}));
+app.get('/', routes.index);
 
-// create application/json parser
-var jsonParser = bodyParser.json();
+app.post('/uploadThumbnail', routes.uploadThumbnail);
 
-app.get('/', function (req, res) {
-  // if (!isLoggedIn(req.session)) {
-  //   return res.redirect('/login');
-  // } else {
-  //   return res.redirect('/turbine');
-  // }
-  res.render('index.html');
-});
+app.get('/gallery', routes.gallery);
 
-app.post('/upload', function (req, res) {
+app.get('/records/:num', routes.getRecord);
 
-  //console.log(req.body.data, req.body.imgURL);
+app.get('/login', auth.login);
 
-  if (!req.body.data) {
-    return res.send('need data');
-  }
-  if (!req.body.imgURL) {
-    return res.send('need imgURL');
-  }
+app.get('/callback', auth.callback);
 
-  var record = new Record();
-  record.data = req.body.data;
-  record.imgURL = req.body.imgURL;
-  record.save();
-  //res.send('saved');
-});
+app.post('/uploadModel', upload.uploadModel);
 
-app.get('/gallery', function (req, res) {
-  res.render('gallery.html');
-});
+app.get('/shape/:id', routes.shapeRebuild);
 
-app.get('/records/:num', function (req, res) {
-
-  var query = {};
-  var select = 'data imgURL';
-  var option = {
-    limit: 2,
-    skip: req.params.num
-  };
-  Record.find(query, select, option, function (err, data) {
-      if (err) return console.error(err);
-      res.send(data);
-    })
-    //res.render('gallery.html');
-});
-
-app.get('/:id', function (req, res) {
-  res.render('index.html');
-});
-
-app.get('/:id/shape', function (req, res) {
-  var query = {
-    '_id': req.params.id
-  };
-  var select = 'data';
-  var option = {
-    limit: 1
-  };
-  Record.find(query, select, option, function (err, data) {
-    if (err) return console.error(err);
-    res.send(data);
-  });
-});
-// main page - display the card form
-// app.get('/turbine', function (request, response) {
-
-//   response.render("turbine.html");
-// });
-
-// app.get('/login', function (req, res) {
-//   auth = new Auth;
-//   return auth.login(function (error, callback) {
-//     req.session.oauth_token = callback.oauth_token;
-//     req.session.oauth_token_secret = callback.oauth_token_secret;
-//     return res.redirect(callback.url);
-//   });
-// });
-
-// app.get('/callback', function (req, res) {
-//   auth = new Auth;
-//   return auth.handleCallback(req.query.oauth_token, req.session.oauth_token_secret, req.query.oauth_verifier, function (callback) {
-//     req.session.oauth_access_token = callback.oauth_access_token;
-//     req.session.oauth_access_token_secret = callback.oauth_access_token_secret;
-//     return res.redirect('/turbine');
-//   });
-// });
-
-// app.post('/upload', function (req, res) {
-
-//   var fs = require('fs');
-//   var buffer = new Buffer(req.body.file);
-//   fs.writeFile("./static/tree.obj", req.body.file, function (err) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send(req.body);
-//       return models.putModel("./static/tree.obj", req.session.oauth_access_token, req.session.oauth_access_token_secret, function (callback) {
-//         return res.render('upload_success.html', {
-//           "callback": JSON.parse(callback),
-//           "server": cfg.API_SERVER
-//         });
-//       });
-//     }
-//   });
-// });
-
-// /* Start the App
-//  */
-// // Make server turn on and listen at defined PORT (or port 3000 if is not defined)
-// // var port = 3000;
-// // app.listen(port, function() {
-// //   console.log("Listening on " + port);
-// // });
-
-// isLoggedIn = function (session) {
-//   if (!session.oauth_access_token) {
-//     return false;
-//   }
-//   return true;
-// };
-
-// isJson = function (url) {
-//   var json;
-//   json = false;
-//   if ((url.substring(url.length - 5)) === ".json") {
-//     json = true;
-//   }
-//   return json;
-// };
+//this should always be in the bottom of this file
+app.get('/:id', routes.shapeShow);
