@@ -100,7 +100,7 @@ rainbow.prototype.extrudeTube = function(params){
 			size=1.1;
 		if(i==this.curves.length-1)
 			size=1.1;
-		var tube = new THREE.Mesh(new THREE.TubeGeometry2(new THREE.SplineCurve3(this.curves[i]), args.curveDetail, size, 12), //cShader(i));
+		var tube = new THREE.Mesh(new THREE.TubeGeometry2(new THREE.SplineCurve3(this.curves[i]), args.curveDetail, size, 12), 
 			new THREE.MeshPhongMaterial({specular:.4,roughness:2}));
 
 		// var tube = sphere(1);  //debug

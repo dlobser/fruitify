@@ -1,0 +1,75 @@
+<style type="text/css">
+  .link{
+    width: 320px;
+    height: 240px;
+  }
+  .thbnl{
+    border: solid 1px #66a;
+  }
+  #loadMore{
+    position: absolute;
+    bottom: 20px;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    text-align: center;
+  }
+</style>
+<div id="content"></div>
+<button id='loadMore'>Load More</button>
+<script src="lib/jqueryui/external/jquery/jquery.js"></script>
+<script>
+  var batch = 0;
+
+  $(document).ready(function(){
+    $.ajax({
+      url: '/records/0',
+        method: 'GET',
+        dataType: 'json',
+        error: function(err){
+          console.error(err);
+        },
+        success: function(data){
+          console.log(data);
+          batch += 2;
+          data.forEach(function(obj){
+            //obj.data
+            makeImg(obj);
+          })
+        }
+      });
+  });
+
+  $('#loadMore').click(function(){
+    $.ajax({
+      url: '/records/'+ batch,
+        method: 'GET',
+        dataType: 'json',
+        error: function(err){
+          console.error(err);
+        },
+        success: function(data){
+          console.log(data);
+          batch += 2;
+          data.forEach(function(obj){
+            //obj.data
+            makeImg(obj);
+          })
+        }
+      });
+  });
+
+  function makeImg(obj){
+    var link = document.createElement('a');
+    var img = document.createElement('img');
+    img.setAttribute('class', 'thbnl');
+    img.setAttribute('src', obj.imgURL);
+    link.appendChild(img);
+    link.setAttribute('class', 'link');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', '/'+obj._id);
+    //obj.data, obj.imgURL
+    document.getElementById('content').appendChild(link);
+    //document.getElementById('content').appendChild(img);
+  }
+</script>
