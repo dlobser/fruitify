@@ -37,13 +37,13 @@ function askForRebuildShape(id) {
 }
 
 function sendToSW() {
-  cosole.log('(ᵔᴥᵔ)uploading...');
+  console.log('(ᵔᴥᵔ)uploading...');
   $.ajax({
     url: '/uploadModel',
     method: 'POST',
     data: {
       //'str': outputString()
-      'str': upResAndSave()
+      'str': upResAndSave('Fruitify.x3d',false)
     },
     dataType: 'json',
     error: function (err) {

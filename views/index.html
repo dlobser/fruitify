@@ -242,10 +242,11 @@
 	 <h3 style="font-size:.7em">  	<i class="fa fa-camera-retro fa-lg"> </i><span style="position:absolute;margin-left:17px;margin-top:-2px">Save / Export</span></h3>
 	  	<div  id="margin" style="margin-left:-35px;background:transparent">
     		<div id="tabs-5" style="text-align:center;font-size:.8em">
-    			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save color .x3d" onclick="upResAndSave('fruitify.x3d')"class="buttonb">
+    			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save color .x3d" onclick="upResAndSave('fruitify.x3d',false)"class="buttonb">
     			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save b&w .obj" onclick="saver()"class="buttonb">
     			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save image" onclick="saveIMG('Fruitify')"class="buttonb">
     			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save data to console" onclick="writeData(true)"class="buttonb">
+    			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="make animated .gif" onclick="MakeGif()"class="buttonb">
     			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="save to gallery" onclick="saveToDb()"class="buttonb">
     			<input style="font-size:.8em;width:150px;height:30px" type="button" id="buttonid" value="send to shapeways" onclick="sendToSW()"class="buttonb">
     		</div>
@@ -270,6 +271,10 @@
 
 </div>
 		<script src="lib/jqueryui/external/jquery/jquery.js"></script>
+
+		<script src="lib/gif.js"></script>
+		<script src="lib/gif.worker.js"></script>
+		<script src="lib/gifMaker.js"></script>
 
 		<script src="lib/jqueryui/jquery-ui.min.js"></script>
 		<script src="lib/three.js"></script>

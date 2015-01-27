@@ -255,7 +255,7 @@ function animate() {
 				if (updateControls)
 						controls.update(10);
 
-		}, 10)
+		}, frameRate)
 }
 
 function render() {

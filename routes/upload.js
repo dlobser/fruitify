@@ -13,7 +13,7 @@ exports.uploadModel = function (req, res) {
     //file: './files/fruitify.obj',
     //file: encodeURIComponent(req.body.str.toString('base64')),
     file: req.body.str,
-    fileName: 'fruitify' + Math.round(Math.random() * 100) + '.obj',
+    fileName: 'fruitify' + Math.round(Math.random() * 100) + '.x3d',
     hasRightsToModel: true,
     acceptTermsAndConditions: true,
   };
