@@ -50,6 +50,7 @@ function sendToSW() {
     },
     success: function (data) {
       console.log(data);
+      alert('(•ω•)successfully uploaded your model to shapeways! Please go check it out!');
     }
   })
 }
