@@ -42,7 +42,8 @@ function sendToSW() {
     url: '/uploadModel',
     method: 'POST',
     data: {
-      'str': outputString()
+      //'str': outputString()
+      'str': upResAndSave()
     },
     dataType: 'json',
     error: function (err) {

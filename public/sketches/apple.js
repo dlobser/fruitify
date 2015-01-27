@@ -530,8 +530,13 @@ function upResAndSave(name, toSave) {
 				length: sliderVal(leafSize) / 200
 		});
 
+		var out = "";
+
 		if (!saveMe)
-				saverX3D(name);
+				out = saverX3D(name);
+
+		return out;
+
 };
 
 function saverX3D(name) {
@@ -603,6 +608,8 @@ function saverX3D(name) {
 		].join("\n");
 
 		output.replace("undefined", "");
+
+		// if (str !== undefined) return output;
 		// document.write(output);
 		// console.log(output);
 		// alert("saved!");
@@ -610,6 +617,8 @@ function saverX3D(name) {
 				type: "text/plain;charset=ANSI"
 		});
 		saveAs(blob, name);
+
+		return output;
 }
 
 THREE.saveGeometryToX3D = function (geo, nums, scalar) {

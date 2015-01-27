@@ -2872,7 +2872,7 @@ var saveAs = saveAs || (navigator.msSaveBlob && navigator.msSaveBlob.bind(naviga
 														}), fs_error);
 												}), fs_error);
 										};
-								dir.getFile(name, {
+										dir.getFile(name, {
 												create: false
 										}, abortable(function (file) {
 												// delete file if it already exists
