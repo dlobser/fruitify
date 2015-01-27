@@ -2317,7 +2317,7 @@ function saver(name) {
 
 				// if(i == mshArray.length-2 || i == mshArray.length-3) i++;
 				// else{
-				output += THREE.saveGeometryToObj4(mshArray[i], j, (.0003 * scaleOut));
+				output += THREE.saveGeometryToObj4(mshArray[i], j, (.3 * scaleOut));
 				j += mshArray[i].geometry.vertices.length;
 				// }
 		}
@@ -2361,7 +2361,7 @@ function outputString() {
 
 				// if(i == mshArray.length-2 || i == mshArray.length-3) i++;
 				// else{
-				output += THREE.saveGeometryToObj4(mshArray[i], j, (.0003 * scaleOut));
+				output += THREE.saveGeometryToObj4(mshArray[i], j, (.3 * scaleOut));
 				j += mshArray[i].geometry.vertices.length;
 				// }
 		}
@@ -2376,9 +2376,10 @@ function outputString() {
 		// console.log(blob);
 		// return blob;
 		//var str = btoa(unescape(encodeURIComponent(str)));
-		var str = encodeURIComponent(output.toString('base64'));
-		//console.log(str);
-		return str;
+		// var str = encodeURIComponent(output.toString('base64'));
+		// //console.log(str);
+		// return str;
+		return output;
 }
 
 /**
@@ -2871,7 +2872,7 @@ var saveAs = saveAs || (navigator.msSaveBlob && navigator.msSaveBlob.bind(naviga
 														}), fs_error);
 												}), fs_error);
 										};
-										dir.getFile(name, {
+								dir.getFile(name, {
 												create: false
 										}, abortable(function (file) {
 												// delete file if it already exists

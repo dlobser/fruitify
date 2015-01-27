@@ -52,21 +52,6 @@ function sendToSW() {
       console.log(data);
     }
   })
-
-  $.ajax({
-    url: '/uploadModelThumbnail',
-    method: 'POST',
-    data: {
-      'thumbnail': makeThumbnail()
-    },
-    dataType: 'json',
-    error: function (err) {
-      console.error(err);
-    },
-    success: function (data) {
-      console.log(data);
-    }
-  })
 }
 
 $(document).ready(function () {

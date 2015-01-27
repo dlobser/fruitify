@@ -66,8 +66,6 @@ app.get('/callback', auth.callback);
 
 app.post('/uploadModel', upload.uploadModel);
 
-app.post('/uploadModelThumbnail', upload.uploadModelThumbnail);
-
 app.get('/shape/:id', routes.shapeRebuild);
 
 //this should always be in the bottom of this file
