@@ -9,6 +9,7 @@ sc1 = {
 		drawStem = false;
 		drawLeaf = false;
 		updateCanvas = false;
+		makeGif = false;
 
 		outputScale = 4;
 
@@ -29,6 +30,8 @@ sc1 = {
 		scene.add(R.tubeParent);
 		spp = sphere(10);
 		spp.material = cShader();
+
+		gif = new gifMaker();
 		// scene.add(spp);
 
 
@@ -36,15 +39,26 @@ sc1 = {
 
 	draw: function (time) {
 
-		cShaders.forEach(function(s){
-			s.uniforms["camMat"].value = camera.matrixWorld;
-		})
-		if(typeof spp!=='undefined')
-			spp.rotation.y+=.1;
+		// cShaders.forEach(function(s){
+		// 	s.uniforms["camMat"].value = camera.matrixWorld;
+		// })
+		
+		// if(typeof spp!=='undefined')
+		// 	spp.rotation.y+=.1;
+		
+		if(makeGif){
+			gif.makeGif();
+			makeGif=false;
+		}
+
+		gif.render();
+
 		lightGroup.lookAt(camera.position);
 		checkAndUpdateSliders();
+
 		if(undo.length>50)
 			undo.shift();
+
 		if(varZ){
 			if(undo.length>0)
 				readData(JSON.parse(undo.pop()));
@@ -54,6 +68,10 @@ sc1 = {
 		
 	}
 };
+
+function MakeGif(){
+	makeGif = true;
+}
 
 function checkAndUpdateSliders(){
 
@@ -89,6 +107,12 @@ function checkAndUpdateSliders(){
 				undo.push(writeData());
 		}
 
+		if(R.loopFinished && sliderDataIsChanged){
+			frameRate = 30;
+		}
+		else
+			frameRate = 1;
+
 
 		if(typeof canvases!=='undefined'){
 
@@ -96,7 +120,9 @@ function checkAndUpdateSliders(){
 				colorCanvas.update();
 
 			if( canvases[0]._drawLine || canvases[1]._drawLine || pSliderData[2]!=sliderData[2] ||  !R.loopFinished || R.curveDetail<100){
-				
+					
+					
+
 					R.setCurves(canvases);
 					R.tubesRotation[0] = ((sliderData[1]-50)/50) * Math.PI;
 					R.tubesRotation[1] = ((sliderData[0]-50)/50) * Math.PI;
@@ -149,8 +175,15 @@ function checkAndUpdateSliders(){
 				R.tubesRotation[0] = ((sliderData[1]-50)/50) * Math.PI;
 				R.tubesRotation[1] = ((sliderData[0]-50)/50) * Math.PI;
 				
+				var gifUpdate = false;
+				if(typeof gif !== 'undefined')
+					gifUpdate = gif.needsUpdate;
+
 				if(pSliderData[0]!=sliderData[0]){
-					R.curveDetail = 10;
+					if(!gifUpdate)
+						R.curveDetail = 10;
+					else
+						R.curveDetail = 30;
 					R.makeLathe();
 				}
 				// else
