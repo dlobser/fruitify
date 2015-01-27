@@ -1,0 +1,9 @@
+{
+  "app": {
+    "name": "Fruitify",
+    "key": "5d82badc427bdcfbe2b82056420621f5aa1b83bd",
+    "secret": "947ea2382a5a63081dd02ad93cfe17211d84bccd"
+  },
+  "port": 3000,
+  "db": "mongodb://karen:wegotogether@ds029821.mongolab.com:29821/fruitify"
+}
